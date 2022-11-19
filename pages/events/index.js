@@ -1,8 +1,10 @@
 import EventList from "../../components/events/EventList";
 import EventsSearch from "../../components/events/EventsSearch";
 import { getEvents } from "../../utils/api/events";
+import { useRouter } from "next/router";
 
 function Events(props) {
+  const router = useRouter();
   const searchHandler = (year, month) => {
     router.push(`/events/${year}/${month}`);
   };
