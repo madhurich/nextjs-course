@@ -8,6 +8,7 @@ import { Fragment } from "react";
 import ResultsTitle from "../../components/events/results-title";
 import Button from "../../components/ui/Button";
 import ErrorAlert from "../../components/ui/error-alert";
+import Head from 'next/head';
 
 function FilteredEvent(props) {
   // const router = useRouter();
@@ -49,20 +50,34 @@ function FilteredEvent(props) {
 
   const filteredEvents = props.events;
   const { numYear, numMonth } = props;
+  let pageHeadData = (
+    <Head>
+          <title>Filtered Event</title>
+          <meta
+            name="description"
+            content={`filtered events`}
+          />
+      </Head>
+  );
 
   if (
     props.hasError
   ) {
     return (
-      <ErrorAlert>
-        <p>Please adjust your values</p>
-      </ErrorAlert>
+      <Fragment>
+        {pageHeadData}
+        <ErrorAlert>
+          <p>Please adjust your values</p>
+        </ErrorAlert>
+      </Fragment>
+      
     );
   }
   // const filteredEvents = getFilteredEvents({ year: numYear, month: numMonth });
   if (!filteredEvents.length || !filteredEvents) {
     return (
       <Fragment>
+        {pageHeadData}
         <ErrorAlert>
           <p>No Events Found</p>
         </ErrorAlert>
@@ -74,8 +89,18 @@ function FilteredEvent(props) {
   }
 
   const date = new Date(numYear, numMonth - 1);
+  pageHeadData = (
+    <Head>
+          <title>Filtered Event</title>
+          <meta
+            name="description"
+            content={`filtered events on ${numMonth}/${numYear}`}
+          />
+      </Head>
+  )
   return (
     <Fragment>
+      {pageHeadData}
       <ResultsTitle date={date} />
       <EventList items={filteredEvents} />
     </Fragment>

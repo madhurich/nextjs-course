@@ -1,0 +1,80 @@
+ADDING HEAD AND TITLE ON ALL PAGES
+
+title which shows on the tab and content is the text we see when searched in search engines
+
+import Head from 'next/head';
+
+<Head>
+    <title>All My Events</title>
+    <meta name="description" content="Explore all events to know more details"/>
+</Head>
+
+and these Head tags are part of response from view page source, after adding these in any of the pages
+check the page source they will be present
+
+Within a component if the Head content is repeating wrap it in a const or let based on usage and re use it
+
+let pageHeadData = (
+    <Head>
+          <title>Filtered Event</title>
+          <meta
+            name="description"
+            content={`filtered events on ${numMonth}/${numYear}`}
+          />
+      </Head>
+  )
+
+  ADDING HEAD IN _app.js
+  Instead of adding head info on all page components, we can also have the same meta data on pages at once by adding it in 
+  _app.js file, Layout used here id used for all teh pages to have look alike same so wrap Head inside of Layout
+
+  return <Layout>
+    <Head>
+          <meta
+          name="viewport"
+          content="initial-scale=1.0, width=device-width"
+          />
+      </Head>
+    <Component {...pageProps} />
+    </Layout>
+
+ADDING DEFAULT META IN _app.js 
+
+next would all the meta tags within _app.js and a specific page component, so for each component we can its own
+meta but if we miss adding it in any component to have a default meta we can add it in _app.js
+
+_document.js and USES
+to configure the html doc itself lets say a lang attribute to the entire page it can be done using this file
+add it in pages/ within root of pages
+
+import Document,  { Html, Head, Main, NextScript } from 'next/document'
+class MyDocument extends Document {
+    render() {
+        return (
+            <Html lang="en">
+                <Head/>
+                <body>
+                    {/* Main is reponsible to render the page components and react components */}
+                    <Main/> 
+                    <NextScript/>
+                </body>
+                
+            </Html>
+        )
+    }
+}
+
+export default MyDocument
+
+IMAGE OPTIMIZATION USING next/image
+generally using <img> tag in a normal HTML yhe image size is more and is not what we wnat in PROD
+so next offers us this <Image/> from 'next/image' which will lazy load images also the size is rendered
+based on which device and browser the client is fetching that image so on chrome it would be "webp" type of image
+instead of "jpg" etc
+
+Also with this if an image is already loaded, instead of fetching it again next will load it from the cache, so once we did this process
+there should be "cache" folder within ".next" folder where you can see the cryptic images cached out of our component
+
+
+https://nextjs.org/docs/api-reference/next/image
+REFER: React Framework for prod https://nextjs.org/
