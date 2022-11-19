@@ -15,7 +15,7 @@ function EventItem(props) {
     year: 'numeric'
   })
 
-  const formattedAddress = location.replace(', ', '\n')
+  const formattedAddress = location?.replace(', ', '\n')
 
   return (
     <li key={id} className={classes.item}>
